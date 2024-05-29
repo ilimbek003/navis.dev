@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import { auth } from "./scr/auth/authAll.js";
 import { bdCnnection } from "./scr/db/db.js";
-import cors from require("cors");
+import cors from 'cors'
 
 const app = express();
 app.use(cors())
