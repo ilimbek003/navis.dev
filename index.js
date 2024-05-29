@@ -12,4 +12,10 @@ app.use(bodyParser.json());
 
 auth(app);
 
-app.listen(4000, () => console.log("Server started on port 4000"));
+app.listen(process.env.PORT || 3000, function () {
+  console.log(
+    "Express server listening on port %d in %s mode",
+    this.address().port,
+    app.settings.env
+  );
+});
