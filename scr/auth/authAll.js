@@ -1,7 +1,7 @@
 import User from "../model/order.js";
 import validator from "validator";
 import jwt from "jsonwebtoken";
-const jwtToken = (id) => {
+const jwtToken = (_id) => {
   return jwt.sign({ _id: "1" }, "secret", { expiresIn: "1h" });
 };
 export const auth = (app) => {
