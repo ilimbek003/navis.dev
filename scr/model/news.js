@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const newMain = new mongoose.Schema({
-  img: { type: Image, required: true },
-  title: { type: String, required: true },
-  decription: { type: String, required: true },
-  link: { type: String, required: true },
-  date: { type: Date, default: Date.now },
+  img: String,
+  title: String,
+  decription: String,
+  link: String,
+  date: Date,
 });
 
 const news = mongoose.model("news", newMain);

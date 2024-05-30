@@ -1,4 +1,4 @@
-import news from "../main/news.js";
+import news from "../model/news.js"; 
 
 export const getNews = (app) => {
   app.get("/news", async (req, res) => {
