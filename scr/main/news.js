@@ -30,4 +30,18 @@ export const getNews = (app) => {
       res.satus(500).json({ error: "Internal Server Error" });
     }
   });
+  app.patch("/update-news", async (req, res) => {
+    try {
+      const { title, decription, link, date } = req.body;
+      const newsDatas = await news.findOne({ _id: req.body._id });
+      newsDatas.title = title;
+      newsDatas.decription = decription;
+      newsDatas.link = link;
+      newsDatas.date = date;
+      await newsDatas.save();
+      res.status(200).json({ message: "News updated successfully" });
+    } catch (error) {
+      res.satus(500).json({ error: "Internal Server Error" });
+    }
+  });
 };
