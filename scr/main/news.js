@@ -17,7 +17,7 @@ export const getNews = (app) => {
 
   app.post("/create-news", async (req, res) => {
     try {
-      const news = new news({
+      const newsDatas = new news({
         img: "",
         title: "",
         decription: "",
@@ -25,7 +25,7 @@ export const getNews = (app) => {
         date: "",
       });
 
-      await news.save();
+      await newsDatas.save();
       res.status(200).json({ message: "News created successfully" });
     } catch (error) {
       res.satus(500).json({ error: "Internal Server Error" });
