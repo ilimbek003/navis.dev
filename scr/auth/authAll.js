@@ -41,7 +41,7 @@ export const auth = (app) => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      if (!user || !(await bcrypt.compare(password, user.password))) {
+      if (!user || user.password !== password) {
         return res.status(401).json({ error: "Invalid username or password" });
       }
       const token = jwtToken(user._id);
@@ -53,7 +53,7 @@ export const auth = (app) => {
       });
     } catch (error) {
       console.error("Error logging in:", error);
-      res.status(500).json({ error: "Internal server erroryyyy" });
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 };
