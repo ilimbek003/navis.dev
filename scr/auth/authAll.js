@@ -66,15 +66,15 @@ export const auth = (app) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-//   app.get("/get", async (req, res) => {
-//     try {
-//       res.status(200).json({
-//         response: true,
-//         message: "Вход в систему успешно выполнен",
-//       });
-//     } catch (error) {
-//       console.error("Error logging in:", error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   });
+  //   app.get("/get", async (req, res) => {
+  //     try {
+  //       res.status(200).json({
+  //         response: true,
+  //         message: "Вход в систему успешно выполнен",
+  //       });
+  //     } catch (error) {
+  //       console.error("Error logging in:", error);
+  //       res.status(500).json({ error: "Internal server error" });
+  //     }
+  //   });
 };
