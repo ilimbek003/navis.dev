@@ -17,9 +17,10 @@ export const getNews = (app) => {
 
   app.post("/create-news", async (req, res) => {
     try {
-      const { img, title, description, link, date } = req.body;
+      const { _id, img, title, description, link, date } = req.body;
 
       const newsData = new news({
+        _id,
         img,
         title,
         description,
@@ -41,7 +42,7 @@ export const getNews = (app) => {
       if (!_id) {
         return res.status(400).json({ error: "News ID is required" });
       }
-      const newsData = await news.findOne({_id: req.body_id });
+      const newsData = await news.findOne({ _id: req.body_id });
       if (!newsData) {
         return res.status(404).json({ error: "News not found" });
       }
