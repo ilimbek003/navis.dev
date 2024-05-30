@@ -46,6 +46,7 @@ export const getNews = (app) => {
       if (!newsData) {
         return res.status(404).json({ error: "News not found" });
       }
+      newsData._id = _id || newsData._id;
       newsData.img = img || newsData.img;
       newsData.title = title || newsData.title;
       newsData.description = description || newsData.description;
