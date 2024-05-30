@@ -65,9 +65,6 @@ export const auth = (app) => {
     try {
       const { old_password, password, confirm_password } = req.body;
       const user = await User.findOne({ _id: req.user._id });
-      if (!user || user.password !== old_password) {
-        return res.status(401).json({ error: "Invalid old password" });
-      }
       user.password = password;
       await user.save();
       res.status(200).json({
@@ -81,6 +78,9 @@ export const auth = (app) => {
       }
       if (password !== confirm_password) {
         return res.status(400).json({ error: "Пароли не совпадают" });
+      }
+      if (!user || user.password !== old_password) {
+        return res.status(401).json({ error: "Invalid old password" });
       }
     } catch (error) {
       console.error("Error updating password:", error);
