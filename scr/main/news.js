@@ -35,10 +35,10 @@ export const getNews = (app) => {
       const { img, title, decription, link, date } = req.body;
       const newsDatas = await news.findOne({ _id: req.body._id });
       newsDatas.img = img;
-      newsDatas.title = title;
+      newsDatas.title = title;  
       newsDatas.decription = decription;
       newsDatas.link = link;
-      newsDatas.date = date;
+      newsDatas.date = date;  
       await newsDatas.save();
       res.status(200).json({ message: "News updated successfully" });
     } catch (error) {
