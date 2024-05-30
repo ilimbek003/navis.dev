@@ -23,7 +23,6 @@ export const getNews = (app) => {
         link: "",
         date: "",
       });
-
       await newsDatas.save();
       res.status(200).json({ message: "News created successfully" });
     } catch (error) {
