@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { auth } from "./scr/auth/authAll.js";
-import { get } from "./scr/personal/personal-cabinet.js";
+import { personal } from "./scr/personal/personal-cabinet.js";
 import { bdCnnection } from "./scr/db/db.js";
 import cors from "cors";
 
@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 auth(app);
-get(app);
+personal(app);
 
 app.listen(process.env.PORT || 3000, function () {
   console.log(

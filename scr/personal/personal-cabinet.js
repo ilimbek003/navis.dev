@@ -1,5 +1,5 @@
-const { User } = require("../models");
-const jwt = require("jsonwebtoken");
+import User from "../model/order.js";
+import jwt from "jsonwebtoken";
 
 const authenticate = (req, res, next) => {
   const token = req.header("Authorization").replace("Bearer ", "");
@@ -16,7 +16,7 @@ const authenticate = (req, res, next) => {
   }
 };
 
-export const get = () => {
+export const personal = (app) => {
   app.get("/personal-cabinet", authenticate, async (req, res) => {
     try {
       const user = await User.findOne({ _id: req.user._id });
@@ -29,6 +29,5 @@ export const get = () => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-};
 
-module.exports = { get };
+};
