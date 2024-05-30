@@ -1,4 +1,5 @@
-import news from "../model/news.js"; 
+import news from "../model/news.js";
+import news from "../model/news.js";
 
 export const getNews = (app) => {
   app.get("/news", async (req, res) => {
@@ -11,6 +12,23 @@ export const getNews = (app) => {
     } catch (error) {
       console.error("Error fetching news:", error);
       return res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  app.post("/create-news", async (req, res) => {
+    try {
+      const news = new news({
+        img: "",
+        title: "",
+        decription: "",
+        link: "",
+        date: "",
+      });
+
+      await news.save();
+      res.status(200).json({ message: "News created successfully" });
+    } catch (error) {
+      res.satus(500).json({ error: "Internal Server Error" });
     }
   });
 };
