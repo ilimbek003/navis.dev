@@ -18,12 +18,11 @@ export const getNews = (app) => {
   app.post("/create-news", async (req, res) => {
     try {
       const newsData = new news({
-        _id: "",
         img: "",
         title: "",
         decription: "",
         link: "",
-        date: date || Date.now(),
+        date: "",
       });
 
       await newsData.save();
@@ -33,28 +32,28 @@ export const getNews = (app) => {
     }
   });
 
-  app.patch("/update-news", async (req, res) => {
-    try {
-      const { _id, img, title, description, link, date } = req.body;
-      if (!_id) {
-        return res.status(400).json({ error: "News ID is required" });
-      }
-      const newsData = await news.findOne({ _id: req.body_id });
-      if (!newsData) {
-        return res.status(404).json({ error: "News not found" });
-      }
-      newsData._id = _id || newsData._id;
-      newsData.img = img || newsData.img;
-      newsData.title = title || newsData.title;
-      newsData.description = description || newsData.description;
-      newsData.link = link || newsData.link;
-      newsData.date = date || newsData.date;
+  //   app.patch("/update-news", async (req, res) => {
+  //     try {
+  //       const { _id, img, title, description, link, date } = req.body;
+  //       if (!_id) {
+  //         return res.status(400).json({ error: "News ID is required" });
+  //       }
+  //       const newsData = await news.findOne({ _id: req.body_id });
+  //       if (!newsData) {
+  //         return res.status(404).json({ error: "News not found" });
+  //       }
+  //       newsData._id = _id || newsData._id;
+  //       newsData.img = img || newsData.img;
+  //       newsData.title = title || newsData.title;
+  //       newsData.description = description || newsData.description;
+  //       newsData.link = link || newsData.link;
+  //       newsData.date = date || newsData.date;
 
-      await newsData.save();
-      res.status(200).json({ message: "News updated successfully" });
-    } catch (error) {
-      console.error("Error updating news:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+  //       await newsData.save();
+  //       res.status(200).json({ message: "News updated successfully" });
+  //     } catch (error) {
+  //       console.error("Error updating news:", error);
+  //       res.status(500).json({ error: "Internal Server Error" });
+  //     }
+  //   });
 };
