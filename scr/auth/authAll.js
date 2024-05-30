@@ -1,6 +1,9 @@
 import User from "../model/order.js";
 import validator from "validator";
-
+import jwt from "jsonwebtoken";
+const jwtToken = (id) => {
+  return jwt.sign({ _id: "1" }, "secret", { expiresIn: "1h" });
+};
 export const auth = (app) => {
   app.post("/register", async (req, res) => {
     try {
@@ -45,6 +48,8 @@ export const auth = (app) => {
         response: true,
         message: "Вход в систему успешно выполнен",
       });
+      const token = jwtToken(user._id);
+      res.json({ token, user });
     } catch (error) {
       console.error("Error logging in:", error);
       res.status(500).json({ error: "Internal server error" });
