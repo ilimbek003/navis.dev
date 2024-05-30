@@ -42,13 +42,11 @@ export const getNews = (app) => {
       if (!newsData) {
         return res.status(404).json({ error: "News not found" });
       }
-      newsData._id = _id || newsData._id;
       newsData.img = img || newsData.img;
       newsData.title = title || newsData.title;
       newsData.description = description || newsData.description;
       newsData.link = link || newsData.link;
       newsData.date = date || newsData.date;
-
       await newsData.save();
       res.status(200).json({ message: "News updated successfully" });
     } catch (error) {
