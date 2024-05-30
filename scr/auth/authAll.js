@@ -64,14 +64,6 @@ export const auth = (app) => {
   app.patch("/new_password", authenticate, async (req, res) => {
     try {
       const { old_password, password, confirm_password } = req.body;
-      if (!password || !validator.isLength(password, { min: 8 })) {
-        return res
-          .status(400)
-          .json({ error: "Пароль должен содержать не менее 8 символов" });
-      }
-      if (password !== confirm_password) {
-        return res.status(400).json({ error: "Пароли не совпадают" });
-      }
       const user = await User.findOne({ _id: req.user._id });
       if (!user || user.password !== old_password) {
         return res.status(401).json({ error: "Invalid old password" });
@@ -82,6 +74,14 @@ export const auth = (app) => {
         response: true,
         message: "Пароль успешно обновлен",
       });
+      if (!password || !validator.isLength(password, { min: 8 })) {
+        return res
+          .status(400)
+          .json({ error: "Пароль должен содержать не менее 8 символов" });
+      }
+      if (password !== confirm_password) {
+        return res.status(400).json({ error: "Пароли не совпадают" });
+      }
     } catch (error) {
       console.error("Error updating password:", error);
       res.status(404).json({ error: "Internal server erroryyyyy" });
