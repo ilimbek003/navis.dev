@@ -34,9 +34,6 @@ export const getNews = (app) => {
     try {
       const { img, title, decription, link, date } = req.body;
       const newsDatas = await news.findOne({ _id: req.body._id });
-      if (!newsDatas) {
-        return res.status(404).json({ error: "News not found" });
-      }
       newsDatas.img = img;
       newsDatas.title = title;
       newsDatas.decription = decription;
