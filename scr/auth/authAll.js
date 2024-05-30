@@ -1,7 +1,7 @@
 import User from "../model/order.js";
 import validator from "validator";
 import jwt from "jsonwebtoken";
-import authenticate from "./authenticate.js"; // Импортируйте middleware
+import { authenticate } from "../token/authenticate.js";
 
 const jwtToken = (id) => {
   return jwt.sign({ _id: id }, "secret", { expiresIn: "1h" });
