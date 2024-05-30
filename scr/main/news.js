@@ -4,7 +4,7 @@ export const getNews = (app) => {
   app.get("/news", async (req, res) => {
     try {
       const newsItems = await news.find();
-      if (!newsItems.length) {
+      if (!newsItems) {
         return res.status(404).json({ error: "News not found" });
       }
       res.status(200).json({ news: newsItems });
@@ -16,47 +16,36 @@ export const getNews = (app) => {
 
   app.post("/create-news", async (req, res) => {
     try {
-      const { img, title, description, link, date } = req.body;
-
-      const newsData = new news({
-        img,
-        title,
-        description,
-        link,
-        date: date || Date.now(),
+      const newsDatas = new news({
+        img: "",
+        title: "",
+        decription: "",
+        link: "",
+        date: "",
       });
 
-      await newsData.save();
+      await newsDatas.save();
       res.status(200).json({ message: "News created successfully" });
     } catch (error) {
-      console.error("Error creating news:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.satus(500).json({ error: "Internal Server Error" });
     }
   });
-
   app.patch("/update-news", async (req, res) => {
     try {
-      const { _id, img, title, description, link, date } = req.body;
-      if (!_id) {
-        return res.status(400).json({ error: "News ID is required" });
-      }
-
-      const newsData = await news.findOne({ _id });
-      if (!newsData) {
+      const { img, title, decription, link, date } = req.body;
+      const newsDatas = await news.findOne({ _id: req.body._id });
+      if (!newsDatas) {
         return res.status(404).json({ error: "News not found" });
       }
-
-      newsData.img = img || newsData.img;
-      newsData.title = title || newsData.title;
-      newsData.description = description || newsData.description;
-      newsData.link = link || newsData.link;
-      newsData.date = date || newsData.date;
-
-      await newsData.save();
+      newsDatas.img = img;
+      newsDatas.title = title;
+      newsDatas.decription = decription;
+      newsDatas.link = link;
+      newsDatas.date = date;
+      await newsDatas.save();
       res.status(200).json({ message: "News updated successfully" });
     } catch (error) {
-      console.error("Error updating news:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.satus(500).json({ error: "Internal Server Error" });
     }
   });
 };
