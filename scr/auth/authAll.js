@@ -84,7 +84,7 @@ export const auth = (app) => {
       });
     } catch (error) {
       console.error("Error updating password:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(404).json({ error: "Internal server erroryyyyy" });
     }
   });
 };
