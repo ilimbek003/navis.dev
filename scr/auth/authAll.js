@@ -4,7 +4,7 @@ import validator from "validator";
 export const auth = (app) => {
   app.post("/register", async (req, res) => {
     try {
-      const { email, oldPassword, password } = req.body;
+      const { email, confirm_password, password } = req.body;
       if (!email || !validator.isEmail(email)) {
         return res.status(400).json({ error: "Некорректный email" });
       }
@@ -13,7 +13,7 @@ export const auth = (app) => {
           .status(400)
           .json({ error: "Пароль должен содержать не менее 8 символов" });
       }
-      if (password !== oldPassword) {
+      if (password !== confirm_password) {
         return res.status(400).json({ error: "Пароли не совпадают" });
       }
       const isUser = await User.findOne({ email });
@@ -22,7 +22,7 @@ export const auth = (app) => {
           .status(409)
           .json({ error: "Пользователь с таким email уже существует" });
       }
-      const newUser = new User({ email, oldPassword, password });
+      const newUser = new User({ email, confirm_password, password });
       await newUser.save();
 
       res.status(201).json({
@@ -41,13 +41,11 @@ export const auth = (app) => {
       if (!user || user.password != password) {
         return res.status(401).json({ error: "Invalid username or password" });
       }
-      res
-        .status(200)
-        .json({
-          response: true,
-          message:
-            "Вход в систему успешно выполненНажмите, чтобы использовать этот вариант",
-        });
+      res.status(200).json({
+        response: true,
+        message:
+          "Вход в систему успешно выполненНажмите, чтобы использовать этот вариант",
+      });
     } catch (error) {
       console.error("Error logging in:", error);
       res.status(500).json({ error: "Internal server error" });
