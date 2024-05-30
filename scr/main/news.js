@@ -3,7 +3,8 @@ import news from "../model/news.js";
 export const getNews = (app) => {
   app.get("/news", async (req, res) => {
     try {
-      const newsItems = await news.find();в
+      const newsItems = await news.find();
+      в;
       if (!newsItems) {
         return res.status(404).json({ error: "News not found" });
       }
@@ -37,11 +38,10 @@ export const getNews = (app) => {
   app.patch("/update-news", async (req, res) => {
     try {
       const { _id, img, title, description, link, date } = req.body;
-
       if (!_id) {
         return res.status(400).json({ error: "News ID is required" });
       }
-      const newsData = await news.findOne({ _id });
+      const newsData = await news.findOne({_id: req.body_id });
       if (!newsData) {
         return res.status(404).json({ error: "News not found" });
       }
