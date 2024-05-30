@@ -1,9 +1,11 @@
 import User from "../model/order.js";
 import validator from "validator";
 import jwt from "jsonwebtoken";
-const jwtToken = (_id) => {
-  return jwt.sign({ _id: "1" }, "secret", { expiresIn: "1h" });
+
+const jwtToken = (id) => {
+  return jwt.sign({ _id: id }, "secret", { expiresIn: "1h" });
 };
+
 export const auth = (app) => {
   app.post("/register", async (req, res) => {
     try {
@@ -25,7 +27,7 @@ export const auth = (app) => {
           .status(409)
           .json({ error: "Пользователь с таким email уже существует" });
       }
-      const newUser = new User({ email, oldPassword, password });
+      const newUser = new User({ email, password });
       await newUser.save();
 
       res.status(201).json({
@@ -37,29 +39,32 @@ export const auth = (app) => {
       res.status(500).json({ error: "Внутренняя ошибка сервера" });
     }
   });
+
   app.post("/login", async (req, res) => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      if (!user || user.password != password) {
+      if (!user || user.password !== password) {
         return res.status(401).json({ error: "Invalid username or password" });
       }
+      const token = jwtToken(user._id);
       res.status(200).json({
         response: true,
         message: "Вход в систему успешно выполнен",
+        token,
+        user,
       });
-      const token = jwtToken(user._id);
-      res.json({ token, user });
     } catch (error) {
       console.error("Error logging in:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
+
   app.post("/activation", async (req, res) => {
     try {
-      const { email } = req.body;
+      const { email, password } = req.body;
       const user = await User.findOne({ email });
-      if (!user || user.password != password) {
+      if (!user || user.password !== password) {
         return res.status(401).json({ error: "Invalid username or password" });
       }
       res.status(200).json({
@@ -71,15 +76,4 @@ export const auth = (app) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  //   app.get("/get", async (req, res) => {
-  //     try {
-  //       res.status(200).json({
-  //         response: true,
-  //         message: "Вход в систему успешно выполнен",
-  //       });
-  //     } catch (error) {
-  //       console.error("Error logging in:", error);
-  //       res.status(500).json({ error: "Internal server error" });
-  //     }
-  //   });
 };
