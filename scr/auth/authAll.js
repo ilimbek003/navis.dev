@@ -53,7 +53,7 @@ export const auth = (app) => {
       });
     } catch (error) {
       console.error("Error logging in:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server erroryyyy" });
     }
   });
 };
