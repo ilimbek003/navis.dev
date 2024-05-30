@@ -26,7 +26,7 @@ export const getNews = (app) => {
         date: date || Date.now(),
       });
 
-      await newsDatas.save();
+      await newsData.save();
       res.status(200).json({ message: "News created successfully" });
     } catch (error) {
       res.satus(500).json({ error: "Internal Server Error" });
