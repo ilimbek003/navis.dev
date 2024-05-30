@@ -30,6 +30,7 @@ export const getNews = (app) => {
       res.satus(500).json({ error: "Internal Server Error" });
     }
   });
+
   app.patch("/update-news", async (req, res) => {
     try {
       const { img, title, decription, link, date } = req.body;
