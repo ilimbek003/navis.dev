@@ -20,11 +20,11 @@ export const getNews = (app) => {
       const { _id, img, title, description, link, date } = req.body;
 
       const newsData = new news({
-        _id,
-        img,
-        title,
-        description,
-        link,
+        _id: "",
+        img: "",
+        title: "",
+        decription: "",
+        link: "",
         date: date || Date.now(),
       });
 
