@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 auth(app);
-app.use("/personal-cabinet", app);
+app(app);
 
 app.listen(process.env.PORT || 3000, function () {
   console.log(
