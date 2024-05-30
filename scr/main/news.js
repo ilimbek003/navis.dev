@@ -31,9 +31,10 @@ export const getNews = (app) => {
   });
 
   app.patch("/update-news", async (req, res) => {
+    const { id } = req.params;
     try {
       const { img, title, decription, link, date } = req.body;
-      const newsDatas = await news.findOne({ _id: req.body._id });
+      const newsDatas = await news.findOne({ id });
       newsDatas.img = img;
       newsDatas.title = title;
       newsDatas.decription = decription;
