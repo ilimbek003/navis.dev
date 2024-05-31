@@ -4,7 +4,7 @@ export const getNews = (app) => {
   app.get("/news", async (req, res) => {
     try {
       const newsItems = await news.find();
-      if (!newsItems) {
+      if (!newsItems.length) {
         return res.status(404).json({ error: "News not found" });
       }
       res.status(200).json({ news: newsItems });
@@ -29,21 +29,46 @@ export const getNews = (app) => {
       res.satus(500).json({ error: "Internal Server Error" });
     }
   });
-
-  app.patch("/update-news", async (req, res) => {
-    const { id } = req.params;
+  app.patch("/update-news/:_id", async (req, res) => {
+    const { _id } = req.params;
     try {
-      const { img, title, decription, link, date } = req.body;
-      const newsDatas = await news.findOne({ id });
-      newsDatas.img = img;
-      newsDatas.title = title;
-      newsDatas.decription = decription;
-      newsDatas.link = link;
-      newsDatas.date = date;
-      await newsDatas.save();
-      res.status(200).json({ message: "News updated successfully" });
+      const { img, title, description, link, date } = req.body;
+      const newsData = await news.findByIdAndUpdate(
+        _id,
+        {
+          img,
+          title,
+          description,
+          link,
+          date,
+        },
+        { new: true }
+      );
+
+      if (!newsData) {
+        return res.status(404).json({ error: "News not found" });
+      }
+      res
+        .status(200)
+        .json({ message: "News updated successfully", news: newsData });
     } catch (error) {
-      res.satus(500).json({ error: "Internal Server Error" });
+      console.error("Error updating news:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+  
+  app.get("/news/:_id", async (req, res) => {
+    const { _id } = req.params;
+    try {
+      const newsData = await news.findById(_id);
+      if (!newsData) {
+        return res.status(404).json({ error: "News not found" });
+      } else {
+        res.status(200).json({ news: newsData });
+      }
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 };

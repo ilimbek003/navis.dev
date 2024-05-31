@@ -5,7 +5,7 @@ const newMain = new mongoose.Schema({
   title: String,
   decription: String,
   link: String,
-  date: Date,
+  date: String,
 });
 
 const news = mongoose.model("news", newMain);
