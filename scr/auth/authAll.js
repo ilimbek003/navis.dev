@@ -57,7 +57,7 @@ export const auth = (app) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  app.patch("/auth/logout", authenticate, async (req, res) => {
+  app.patch("/auth/change", authenticate, async (req, res) => {
     try {
       const { password, confirm_password, old_password } = req.body;
       if (!password || !validator.isLength(password, { min: 8 })) {
