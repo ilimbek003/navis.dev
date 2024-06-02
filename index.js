@@ -16,6 +16,7 @@ import * as AdminJSMongoose from "@adminjs/mongoose";
 bdCnnection();
 
 const app = express();
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,7 +49,7 @@ const router = AdminJSExpress.buildRouter(adminJs);
 
 app.use(adminJs.options.rootPath, router);
 
-app.listen(process.env.PORT || 8000, "172.20.10.13", function () {
+app.listen(process.env.PORT || 8000, "192.168.0.144", function () {
   console.log(
     "Express server listening on port %d in %s mode",
     this.address().port,
