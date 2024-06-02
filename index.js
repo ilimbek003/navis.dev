@@ -17,7 +17,11 @@ bdCnnection();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -56,5 +60,3 @@ app.listen(process.env.PORT || 8000, "192.168.0.144", function () {
     app.settings.env
   );
 });
-
-
