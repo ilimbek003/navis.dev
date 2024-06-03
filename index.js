@@ -12,7 +12,6 @@ import mongoose from "mongoose";
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import * as AdminJSMongoose from "@adminjs/mongoose";
-import multer from "multer";
 
 bdCnnection();
 
@@ -33,20 +32,6 @@ getNews(app);
 getReviews(app);
 getCghange(app);
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
-
-app.post("/admin/upload", upload.single("file"), (req, res) => {
-  res.json({ filename: req.file.filename });
-});
-
 AdminJS.registerAdapter(AdminJSMongoose);
 
 const adminJs = new AdminJS({
@@ -65,9 +50,6 @@ const adminJs = new AdminJS({
 });
 
 const router = AdminJSExpress.buildRouter(adminJs);
-router.post("/upload", upload.single("file"), (req, res) => {
-  res.json({ filename: req.file.filename });
-});
 
 app.use(adminJs.options.rootPath, router);
 
