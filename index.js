@@ -53,7 +53,7 @@ const router = AdminJSExpress.buildRouter(adminJs);
 
 app.use(adminJs.options.rootPath, router);
 
-app.listen(process.env.PORT || 8000, "192.168.0.144", function () {
+app.listen(process.env.PORT || 8000, function () {
   console.log(
     "Express server listening on port %d in %s mode",
     this.address().port,
