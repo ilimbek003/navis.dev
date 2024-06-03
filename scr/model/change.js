@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 const change = new mongoose.Schema({
   title: String,
   name: String,
-  price: String,
-  // sell: String,
+  fiat: String,
+  bay: String,
+  sell: String,
   date: String,
   img: String,
   type: {
