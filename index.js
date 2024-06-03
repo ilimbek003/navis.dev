@@ -12,6 +12,7 @@ import mongoose from "mongoose";
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import * as AdminJSMongoose from "@adminjs/mongoose";
+import path from "path";
 
 bdCnnection();
 
@@ -34,18 +35,25 @@ getCghange(app);
 
 AdminJS.registerAdapter(AdminJSMongoose);
 
+const __dirname = path.resolve();
+
 const adminJs = new AdminJS({
   databases: [mongoose],
   rootPath: "/admin",
-  options: {
-    properties: {
-      image: {
-        components: {
-          edit: AdminJS.bundle("./components/ImageUpload"),
+  resources: [
+    {
+      resource: User,
+      options: {
+        properties: {
+          image: {
+            components: {
+              edit: path.join(__dirname, "./components/ImageUpload.jsx"),
+            },
+          },
         },
       },
     },
-  },
+  ],
 });
 
 const router = AdminJSExpress.buildRouter(adminJs);
