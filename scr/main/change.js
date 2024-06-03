@@ -16,6 +16,7 @@ export const getCghange = (app) => {
   });
   app.post("/change", async (req, res) => {
     const { title, name, bay, sell, date, type } = req.body;
+    const { imgFile } = req.files;
     const newChange = new changesBlock({
       title,
       name,
@@ -23,6 +24,7 @@ export const getCghange = (app) => {
       sell,
       date: date || new Date().toLocaleDateString(),
       type,
+      img: imgFile ? imgFile.name : "",
     });
     try {
       await newChange.save();
