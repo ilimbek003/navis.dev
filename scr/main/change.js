@@ -5,6 +5,7 @@ export const getCghange = (app) => {
     try {
       const { type } = req.query;
       let filter = {};
+      
       if (type) {
         filter.type = type;
       }
