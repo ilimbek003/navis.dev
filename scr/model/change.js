@@ -7,7 +7,7 @@ const change = new mongoose.Schema({
   bay: String,
   sell: String,
   date: String,
-  img: String,
+  imagePath: String,
   type: {
     type: String,
     enum: ["1", "2", "3"],
