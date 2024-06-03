@@ -37,16 +37,15 @@ AdminJS.registerAdapter(AdminJSMongoose);
 const adminJs = new AdminJS({
   databases: [mongoose],
   rootPath: "/admin",
-  resources: [
-    {
-      resource: User,
-      options: {
-        properties: {
-          password: { isVisible: false },
+  options: {
+    properties: {
+      image: {
+        components: {
+          edit: AdminJS.bundle("./components/ImageUpload"),
         },
       },
     },
-  ],
+  },
 });
 
 const router = AdminJSExpress.buildRouter(adminJs);
