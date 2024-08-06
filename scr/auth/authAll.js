@@ -38,6 +38,7 @@ export const auth = (app) => {
       res.status(500).json({ error: "Внутренняя ошибка сервера" });
     }
   });
+  
   app.post("/auth/login", async (req, res) => {
     try {
       const { email, password } = req.body;

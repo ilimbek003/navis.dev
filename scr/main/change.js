@@ -1,11 +1,13 @@
 import changesBlock from "../model/change.js";
+import multer from "multer";
 
+const upload = multer({ dest: "uploads/" });
 export const getCghange = (app) => {
   app.get("/change", async (req, res) => {
     try {
       const { type } = req.query;
       let filter = {};
-      
+
       if (type) {
         filter.type = type;
       }
@@ -15,9 +17,9 @@ export const getCghange = (app) => {
       res.status(500).json({ message: error.message });
     }
   });
-  app.post("/change", async (req, res) => {
+  app.post("/change", upload.single("imgFile"), async (req, res) => {
     const { title, name, bay, sell, date, type } = req.body;
-    const { imgFile } = req.files;
+    const imgFile = req.file;
     const newChange = new changesBlock({
       title,
       name,
@@ -25,7 +27,7 @@ export const getCghange = (app) => {
       sell,
       date: date || new Date().toLocaleDateString(),
       type,
-      img: imgFile ? imgFile.name : "",
+      img: imgFile ? imgFile.filename : "",
     });
     try {
       await newChange.save();

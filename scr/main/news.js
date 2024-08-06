@@ -1,12 +1,56 @@
 import news from "../model/news.js";
 
 export const getNews = (app) => {
+  /**
+   * @swagger
+   * components:
+   *   schemas:
+   *     News:
+   *       type: object
+   *       required:
+   *         - title
+   *         - content
+   *       properties:
+   *         _id:
+   *           type: string
+   *           description: The auto-generated id of the news
+   *         title:
+   *           type: string
+   *           description: The title of the news
+   *         content:
+   *           type: string
+   *           description: The content of the news
+   *         date:
+   *           type: string
+   *           format: date-time
+   *           description: The date the news was created
+   *       example:
+   *         _id: "60d0fe4f5311236168a109ca"
+   *         title: "Breaking News"
+   *         content: "This is the content of the breaking news."
+   *         date: "2023-06-04T10:00:00Z"
+   */
+
+  /**
+   * @swagger
+   * /news:
+   *   get:
+   *     summary: Получить список новостей
+   *     responses:
+   *       200:
+   *         description: Успешный ответ
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/News'
+   */
   app.get("/news", async (req, res) => {
     try {
       const newsItems = await news.find();
-      if (!newsItems.length) {
-        return res.status(404).json({ error: "News not found" });
-      }
+      const newsData = { news: newsItems };
+      res.render("index", newsData.description);
       res.status(200).json({ news: newsItems });
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -14,58 +58,35 @@ export const getNews = (app) => {
     }
   });
 
-  app.post("/create-news", async (req, res) => {
+  /** 
+   * @swagger
+   * /news/{id}:
+   *   get:
+   *     summary: Получить новость по ID
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         schema:
+   *           type: string
+   *         required: true
+   *         description: ID новости
+   *     responses:
+   *       200:
+   *         description: Успешный ответ
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/News'
+   *       404:
+   *         description: Новость не найдена
+   *       500:
+   *         description: Внутренняя ошибка сервера
+   */
+  app.get("/news/:id", async (req, res) => {
+    const { id } = req.params;
     try {
-      const newsDatas = new news({
-        img: "",
-        title: "",
-        decription: "",
-        link: "",
-        date: "",
-      });
-      await newsDatas.save();
-      res.status(200).json({ message: "News created successfully" });
-    } catch (error) {
-      res.satus(500).json({ error: "Internal Server Error" });
-    }
-  });
-  app.patch("/update-news/:_id", async (req, res) => {
-    const { _id } = req.params;
-    try {
-      const { img, title, description, link, date } = req.body;
-      const newsData = await news.findByIdAndUpdate(
-        _id,
-        {
-          img,
-          title,
-          description,
-          link,
-          date,
-        },
-        { new: true }
-      );
-
-      if (!newsData) {
-        return res.status(404).json({ error: "News not found" });
-      }
-      res
-        .status(200)
-        .json({ message: "News updated successfully", news: newsData });
-    } catch (error) {
-      console.error("Error updating news:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  });
-  
-  app.get("/news/:_id", async (req, res) => {
-    const { _id } = req.params;
-    try {
-      const newsData = await news.findById(_id);
-      if (!newsData) {
-        return res.status(404).json({ error: "News not found" });
-      } else {
-        res.status(200).json({ news: newsData });
-      }
+      const newsData = await news.findById(id);
+      res.status(200).json({ news: newsData });
     } catch (error) {
       console.error("Error fetching news:", error);
       res.status(500).json({ error: "Internal Server Error" });

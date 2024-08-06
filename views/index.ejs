@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TinyMCE Quick Start Guide</title>
+  </head>
+
+  <body>
+    <h1>TinyMCE Quick Start Guide</h1>
+    <textarea id="mytextarea">Hello, World!</textarea>
+
+    <script
+      src="/tinymce/js/tinymce/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+    <script>
+      tinymce.init({
+        selector: "#mytextarea",
+        plugins: [
+          "advlist",
+          "autolink",
+          "link",
+          "image",
+          "lists",
+          "charmap",
+          "preview",
+          "anchor",
+          "pagebreak",
+          "searchreplace",
+          "wordcount",
+          "visualblocks",
+          "visualchars",
+          "code",
+          "fullscreen",
+          "insertdatetime",
+          "media",
+          "table",
+          "emoticons",
+          "help",
+        ],
+        toolbar:
+          "undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | filelink image link | code media | pagebreak | fullscreen",
+        menubar: "favs file edit view insert format tools table",
+        content_style:
+          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+      });
+    </script>
+  </body>
+</html>
